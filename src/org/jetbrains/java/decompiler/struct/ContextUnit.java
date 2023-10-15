@@ -1,6 +1,8 @@
 // Copyright 2000-2021 JetBrains s.r.o. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package org.jetbrains.java.decompiler.struct;
 
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import org.jetbrains.java.decompiler.main.DecompilerContext;
 import org.jetbrains.java.decompiler.main.extern.IFernflowerPreferences;
 import org.jetbrains.java.decompiler.main.extern.IResultSaver;
@@ -11,7 +13,6 @@ import org.jetbrains.java.decompiler.util.DataInputFullStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.jar.JarFile;
 import java.util.jar.Manifest;
 
 public class ContextUnit {
@@ -30,7 +31,20 @@ public class ContextUnit {
 
   private final List<String> classEntries = new ArrayList<>();  // class file or jar/zip entry
   private final List<String> dirEntries = new ArrayList<>();
-  private final List<String[]> otherEntries = new ArrayList<>();
+  private final List<OtherEntry> otherEntries = new ArrayList<>();
+
+  class OtherEntry {
+
+    ZipFile zipFile;
+    ZipEntry entry;
+    String fileName;
+
+    public OtherEntry(ZipFile zipFile, ZipEntry entry, String fileName) {
+      this.zipFile = zipFile;
+      this.entry = entry;
+      this.fileName = fileName;
+    }
+  }
 
   private List<StructClass> classes = new ArrayList<>();
   private Manifest manifest;
@@ -53,10 +67,10 @@ public class ContextUnit {
     dirEntries.add(entry);
   }
 
-  public void addOtherEntry(String fullPath, String entry) {
+  public void addOtherEntry(ZipFile zipFile, ZipEntry entry, String fileName) {
     if (DecompilerContext.getOption(IFernflowerPreferences.SKIP_EXTRA_FILES))
         return;
-    otherEntries.add(new String[]{fullPath, entry});
+    resultSaver.copyFileEntry(zipFile, entry, filename, fileName);
   }
 
   public void reload(LazyLoader loader) throws IOException {
@@ -82,13 +96,13 @@ public class ContextUnit {
 
   public void save() {
     switch (type) {
-      case TYPE_FOLDER -> {
+      case TYPE_FOLDER, TYPE_JAR, TYPE_ZIP -> {
         // create folder
         resultSaver.saveFolder(filename);
 
         // non-class files
-        for (String[] pair : otherEntries) {
-          resultSaver.copyFile(pair[0], filename, pair[1]);
+        for (OtherEntry entry : otherEntries) {
+          resultSaver.copyFileEntry(entry.zipFile, entry.entry, filename, entry.fileName);
         }
 
         // classes
@@ -109,8 +123,9 @@ public class ContextUnit {
             }
           }
         }
-      }
-      case TYPE_JAR, TYPE_ZIP -> {
+
+
+        /*
         // create archive file
         resultSaver.saveFolder(archivePath);
         resultSaver.createArchive(archivePath, filename, manifest);
@@ -138,6 +153,7 @@ public class ContextUnit {
         }
 
         resultSaver.closeArchive(archivePath, filename);
+        */
       }
     }
   }
