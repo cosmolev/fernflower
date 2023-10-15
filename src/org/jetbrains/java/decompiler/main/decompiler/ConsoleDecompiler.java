@@ -160,6 +160,15 @@ public class ConsoleDecompiler implements IBytecodeProvider, IResultSaver {
   }
 
   @Override
+  public void copyFileEntry(ZipFile zipFile, ZipEntry entry, String path, String entryName) {
+    try(InputStream in = zipFile.getInputStream(entry)) {
+      InterpreterUtil.copyStreamEntry(in, new File(getAbsolutePath(path), entryName));
+    } catch (IOException ex) {
+      DecompilerContext.getLogger().writeMessage("Cannot copy " + entry.getName() + " to " + entryName, ex);
+    }
+  }
+
+  @Override
   public void copyFile(String source, String path, String entryName) {
     try {
       InterpreterUtil.copyFile(new File(source), new File(getAbsolutePath(path), entryName));
@@ -172,6 +181,13 @@ public class ConsoleDecompiler implements IBytecodeProvider, IResultSaver {
   @Override
   public void saveClassFile(String path, String qualifiedName, String entryName, String content, int[] mapping) {
     File file = new File(getAbsolutePath(path), entryName);
+    try {
+      file.getParentFile().mkdirs();
+      file.createNewFile();
+    }
+    catch (IOException e) {
+      DecompilerContext.getLogger().writeMessage("Cannot write class file " + file, e);
+    }
     try (Writer out = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)) {
       out.write(content);
     }

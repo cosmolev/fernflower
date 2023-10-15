@@ -2,9 +2,13 @@
 package org.jetbrains.java.decompiler.main.extern;
 
 import java.util.jar.Manifest;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 public interface IResultSaver {
   void saveFolder(String path);
+
+  void copyFileEntry(ZipFile zipFile, ZipEntry entry, String path, String entryName);
 
   void copyFile(String source, String path, String entryName);
 

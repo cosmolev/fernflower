@@ -16,7 +16,17 @@ public final class InterpreterUtil {
   private static final int BUFFER_SIZE = 16 * 1024;
 
   public static void copyFile(File source, File target) throws IOException {
+    target.getParentFile().mkdirs();
+    target.createNewFile();
     try (FileInputStream in = new FileInputStream(source); FileOutputStream out = new FileOutputStream(target)) {
+      copyStream(in, out);
+    }
+  }
+
+  public static void copyStreamEntry(InputStream in, File target) throws IOException {
+    target.getParentFile().mkdirs();
+    target.createNewFile();
+    try (FileOutputStream out = new FileOutputStream(target)) {
       copyStream(in, out);
     }
   }

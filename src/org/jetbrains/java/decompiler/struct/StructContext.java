@@ -117,7 +117,6 @@ public class StructContext {
         }
       }
       else {
-        unit.addOtherEntry(file.getAbsolutePath(), filename);
       }
     }
   }
@@ -147,7 +146,10 @@ public class StructContext {
             loader.addClassLink(cl.qualifiedName, new LazyLoader.Link(file.getAbsolutePath(), name));
           }
           else {
-            unit.addOtherEntry(file.getAbsolutePath(), name);
+            //TODO use entry.getCompressedSize() to detect zipbombs
+            if(entry.getSize() != -1 && entry.getSize() < 100000) {
+              unit.addOtherEntry(archive, entry, name);
+            }
           }
         }
         else {
