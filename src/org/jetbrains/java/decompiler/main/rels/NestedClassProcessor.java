@@ -189,18 +189,18 @@ public class NestedClassProcessor {
         child.parent = null;
         setEnclosing.remove(node.classStruct.qualifiedName);
 
-        boolean hasEnclosing = !setEnclosing.isEmpty() && insertNestedClass(root, child);
-
-        if (!hasEnclosing) {
-          if (child.type == ClassNode.CLASS_ANONYMOUS) {
-            String message = "Unreferenced anonymous class " + child.classStruct.qualifiedName + "!";
-            DecompilerContext.getLogger().writeMessage(message, IFernflowerLogger.Severity.WARN);
-          }
-          else if (child.type == ClassNode.CLASS_LOCAL) {
-            String message = "Unreferenced local class " + child.classStruct.qualifiedName + "!";
-            DecompilerContext.getLogger().writeMessage(message, IFernflowerLogger.Severity.WARN);
-          }
-        }
+//        boolean hasEnclosing = !setEnclosing.isEmpty() && insertNestedClass(root, child);
+//
+//        if (!hasEnclosing) {
+//          if (child.type == ClassNode.CLASS_ANONYMOUS) {
+//            String message = "Unreferenced anonymous class " + child.classStruct.qualifiedName + "!";
+//            DecompilerContext.getLogger().writeMessage(message, IFernflowerLogger.Severity.WARN);
+//          }
+//          else if (child.type == ClassNode.CLASS_LOCAL) {
+//            String message = "Unreferenced local class " + child.classStruct.qualifiedName + "!";
+//            DecompilerContext.getLogger().writeMessage(message, IFernflowerLogger.Severity.WARN);
+//          }
+//        }
       }
     }
   }
@@ -243,8 +243,8 @@ public class NestedClassProcessor {
 
         Map<String, List<VarFieldPair>> mask = getMaskLocalVars(nd.getWrapper());
         if (mask.isEmpty()) {
-          String message = "Nested class " + nd.classStruct.qualifiedName + " has no constructor!";
-          DecompilerContext.getLogger().writeMessage(message, IFernflowerLogger.Severity.WARN);
+//          String message = "Nested class " + nd.classStruct.qualifiedName + " has no constructor!";
+//          DecompilerContext.getLogger().writeMessage(message, IFernflowerLogger.Severity.WARN);
         }
         else {
           mapVarMasks.put(nd.classStruct.qualifiedName, mask);

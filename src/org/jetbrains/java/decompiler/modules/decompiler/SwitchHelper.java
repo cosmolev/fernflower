@@ -52,9 +52,9 @@ public final class SwitchHelper {
           else {
             Exprent realConst = mapping.get(exprent);
             if (realConst == null) {
-              DecompilerContext.getLogger()
-                .writeMessage("Unable to simplify switch on enum: " + exprent + " not found, available: " + mapping,
-                              IFernflowerLogger.Severity.ERROR);
+//              DecompilerContext.getLogger()
+//                .writeMessage("Unable to simplify switch on enum: " + exprent + " not found, available: " + mapping,
+//                              IFernflowerLogger.Severity.ERROR);
               return;
             }
             values.add(realConst.copy());
