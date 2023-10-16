@@ -334,7 +334,7 @@ public final class DomHelper {
           }
           else {
             if (mapstage == 2 || mapRefreshed) { // last chance lost
-              DecompilerContext.getLogger().writeMessage("Statement cannot be decomposed although reducible!", IFernflowerLogger.Severity.ERROR);
+              //DecompilerContext.getLogger().writeMessage("Statement cannot be decomposed although reducible!", IFernflowerLogger.Severity.ERROR);
             }
             break;
           }

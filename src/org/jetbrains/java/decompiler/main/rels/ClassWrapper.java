@@ -123,8 +123,8 @@ public class ClassWrapper {
         }
       }
       catch (Throwable t) {
-        String message = "Method " + mt.getName() + " " + mt.getDescriptor() + " couldn't be decompiled.";
-        DecompilerContext.getLogger().writeMessage(message, IFernflowerLogger.Severity.WARN, t);
+        //String message = "Method " + mt.getName() + " " + mt.getDescriptor() + " couldn't be decompiled.";
+        //DecompilerContext.getLogger().writeMessage(message, IFernflowerLogger.Severity.WARN, t);
         isError = true;
       }
 
