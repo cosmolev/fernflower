@@ -159,7 +159,7 @@ public class ClassesProcessor implements CodeConstants {
 
                 ClassNode nestedNode = mapRootClasses.get(nestedClass);
                 if (nestedNode == null) {
-                  DecompilerContext.getLogger().writeMessage("Nested class " + nestedClass + " missing!", IFernflowerLogger.Severity.WARN);
+                  //DecompilerContext.getLogger().writeMessage("Nested class " + nestedClass + " missing!", IFernflowerLogger.Severity.WARN);
                   continue;
                 }
 
