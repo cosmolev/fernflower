@@ -161,7 +161,7 @@ public class Fernflower implements IDecompiledData {
       throw e;
     }
     catch (Throwable t) {
-      DecompilerContext.getLogger().writeMessage("Class " + cl.qualifiedName + " couldn't be fully decompiled.", t);
+      //DecompilerContext.getLogger().writeMessage("Class " + cl.qualifiedName + " couldn't be fully decompiled.", t);
       return null;
     }
   }

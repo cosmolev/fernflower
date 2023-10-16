@@ -89,8 +89,8 @@ public final class MethodDescriptor {
           actualParams = sigFields.stream().filter(Objects::isNull).count();
         }
         if (actualParams != sig.parameterTypes.size()) {
-          String message = "Inconsistent generic signature in method " + struct.getName() + " " + struct.getDescriptor() + " in " + struct.getClassQualifiedName();
-          DecompilerContext.getLogger().writeMessage(message, IFernflowerLogger.Severity.WARN);
+          //String message = "Inconsistent generic signature in method " + struct.getName() + " " + struct.getDescriptor() + " in " + struct.getClassQualifiedName();
+          //DecompilerContext.getLogger().writeMessage(message, IFernflowerLogger.Severity.WARN);
           sig = null;
         }
       }

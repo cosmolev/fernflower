@@ -208,10 +208,10 @@ public class NewExprent extends Exprent {
               buf.append(ExprProcessor.getCastTypeName(descriptor.superclass, Collections.emptyList()));
             }
             else {
-              if (descriptor.superinterfaces.size() > 1 && !lambda) {
-                DecompilerContext.getLogger().writeMessage("Inconsistent anonymous class signature: " + child.classStruct.qualifiedName,
-                                                           IFernflowerLogger.Severity.WARN);
-              }
+//              if (descriptor.superinterfaces.size() > 1 && !lambda) {
+//                DecompilerContext.getLogger().writeMessage("Inconsistent anonymous class signature: " + child.classStruct.qualifiedName,
+//                                                           IFernflowerLogger.Severity.WARN);
+//              }
               buf.append(ExprProcessor.getCastTypeName(descriptor.superinterfaces.get(0), Collections.emptyList()));
             }
           }
