@@ -240,9 +240,9 @@ public class ClassWriter {
           buffer.append(codeBuffer);
         }
         catch (Throwable ex) {
-          DecompilerContext.getLogger().writeMessage("Method " + mt.getName() + " " + mt.getDescriptor() + " couldn't be written.",
-            IFernflowerLogger.Severity.WARN,
-            ex);
+          //DecompilerContext.getLogger().writeMessage("Method " + mt.getName() + " " + mt.getDescriptor() + " couldn't be written.",
+          //  IFernflowerLogger.Severity.WARN,
+          //  ex);
           methodWrapper.decompiledWithErrors = true;
           if (methodWrapper.decompiledWithErrorsMessage != null) {
             buffer.append("// $FF: " + methodWrapper.decompiledWithErrorsMessage);
@@ -997,8 +997,8 @@ public class ClassWriter {
             tracer.addTracer(codeTracer);
           }
           catch (Throwable t) {
-            String message = "Method " + mt.getName() + " " + mt.getDescriptor() + " in class " + node.classStruct.qualifiedName + " couldn't be written.";
-            DecompilerContext.getLogger().writeMessage(message, IFernflowerLogger.Severity.WARN, t);
+            //String message = "Method " + mt.getName() + " " + mt.getDescriptor() + " in class " + node.classStruct.qualifiedName + " couldn't be written.";
+            //DecompilerContext.getLogger().writeMessage(message, IFernflowerLogger.Severity.WARN, t);
             methodWrapper.decompiledWithErrors = true;
           }
         }
@@ -1240,8 +1240,8 @@ public class ClassWriter {
             buffer.append(root.toJava(indent, tracer));
           }
           catch (Throwable t) {
-            String message = "Method " + mt.getName() + " " + mt.getDescriptor() + " couldn't be written.";
-            DecompilerContext.getLogger().writeMessage(message, IFernflowerLogger.Severity.WARN, t);
+            //String message = "Method " + mt.getName() + " " + mt.getDescriptor() + " couldn't be written.";
+            //DecompilerContext.getLogger().writeMessage(message, IFernflowerLogger.Severity.WARN, t);
             methodWrapper.decompiledWithErrors = true;
           }
         }
