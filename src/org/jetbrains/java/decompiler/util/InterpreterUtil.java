@@ -23,11 +23,13 @@ public final class InterpreterUtil {
     }
   }
 
+  private static final long MAX_ENTRY_SIZE = 500 * 1024 * 1024; // 500MB zipbomb protection
+
   public static void copyStreamEntry(InputStream in, File target) throws IOException {
     target.getParentFile().mkdirs();
     target.createNewFile();
     try (FileOutputStream out = new FileOutputStream(target)) {
-      copyStream(in, out);
+      copyStreamWithLimit(in, out, MAX_ENTRY_SIZE);
     }
   }
 
@@ -35,6 +37,19 @@ public final class InterpreterUtil {
     byte[] buffer = new byte[BUFFER_SIZE];
     int len;
     while ((len = in.read(buffer)) >= 0) {
+      out.write(buffer, 0, len);
+    }
+  }
+
+  public static void copyStreamWithLimit(InputStream in, OutputStream out, long maxBytes) throws IOException {
+    byte[] buffer = new byte[BUFFER_SIZE];
+    long totalRead = 0;
+    int len;
+    while ((len = in.read(buffer)) >= 0) {
+      totalRead += len;
+      if (totalRead > maxBytes) {
+        throw new IOException("Entry exceeds maximum allowed size of " + maxBytes + " bytes (possible zipbomb)");
+      }
       out.write(buffer, 0, len);
     }
   }
